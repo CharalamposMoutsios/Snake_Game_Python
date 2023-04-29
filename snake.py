@@ -32,6 +32,52 @@ class Food:
     def draw(self):
         pygame.draw.circle(screen, red, self.position, self.radius)
 
+def game():
+    snake = Snake()
+    food = Food()
+    
+    while True:
+        screen.fill(black)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    snake.dx = -5
+                    snake.dy = 0
+                elif event.key == pygame.K_RIGHT:
+                    snake.dx = 5
+                    snake.dy = 0
+                elif event.key == pygame.K_UP:
+                    snake.dx = 0
+                    snake.dy = -5
+                elif event.key == pygame.K_DOWN:
+                    snake.dx = 0
+                    snake.dy = 5
+
+        try:
+            snake.move()
+        except Exception as e:
+            print(e)
+            return False
+
+        snake.draw()
+        food.draw()
+
+        if abs(snake.elements[0][0] - food.position[0]) < 15 and abs(snake.elements[0][1] - food.position[1]) < 15:
+            snake.size += 1
+            snake.elements.append([0, 0])
+            food.position = [random.randrange(0, width - 10, 10), random.randrange(0, height - 10, 10)]
+
+        pygame.display.update()
+        clock.tick(30)
+
+    pygame.quit()
+    quit()
+
 pygame.init()
 
 width = 500
@@ -46,47 +92,12 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 
-snake = Snake()
-food = Food()
-
 while True:
-    screen.fill(black)
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-            
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                snake.dx = -5
-                snake.dy = 0
-            elif event.key == pygame.K_RIGHT:
-                snake.dx = 5
-                snake.dy = 0
-            elif event.key == pygame.K_UP:
-                snake.dx = 0
-                snake.dy = -5
-            elif event.key == pygame.K_DOWN:
-                snake.dx = 0
-                snake.dy = 5
-                
-    try:
-        snake.move()
-    except Exception as e:
-        print(e)
+    if not game():
         break
-        
-    snake.draw()
-    food.draw()
-    
-    if abs(snake.elements[0][0] - food.position[0]) < 15 and abs(snake.elements[0][1] - food.position[1]) < 15:
-        snake.size += 1
-        snake.elements.append([0, 0])
-        food.position = [random.randrange(0, width - 10, 10), random.randrange(0, height - 10, 10)]
-        
-    pygame.display.update()
-    clock.tick(30)
-    
-pygame.quit()
-quit()
+
+    # Game over, ask the user to play again
+    font = pygame.font.SysFont(None, 40)
+    text = font.render('Game over! Play again? (Y/N)', True, white)
+    text_rect = text.get_rect(center=(width/2, height/2))
+    screen.blit
