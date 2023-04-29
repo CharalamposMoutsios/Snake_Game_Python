@@ -9,7 +9,6 @@ class Snake:
         self.dx = 5
         self.dy = 0
         
-        
     def draw(self):
         for element in self.elements:
             pygame.draw.circle(screen, white, element, self.radius)
@@ -21,6 +20,9 @@ class Snake:
             
         self.elements[0][0] += self.dx
         self.elements[0][1] += self.dy
+        
+        if self.elements[0][0] < 0 or self.elements[0][0] > width - 10 or self.elements[0][1] < 0 or self.elements[0][1] > height - 10:
+            raise Exception('Game over')
 
 class Food:
     def __init__(self):
@@ -69,7 +71,12 @@ while True:
                 snake.dx = 0
                 snake.dy = 5
                 
-    snake.move()
+    try:
+        snake.move()
+    except Exception as e:
+        print(e)
+        break
+        
     snake.draw()
     food.draw()
     
@@ -80,3 +87,6 @@ while True:
         
     pygame.display.update()
     clock.tick(30)
+    
+pygame.quit()
+quit()
