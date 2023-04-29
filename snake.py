@@ -96,3 +96,11 @@ while True:
     if not game():
         font = pygame.font.SysFont(None, 40)
         text = font.render('Game over! Play again? (Y/N)', True, white)
+        text_rect = text.get_rect(center=(width/2, height/2))
+        screen.blit(text, text_rect)
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame
