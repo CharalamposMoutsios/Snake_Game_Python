@@ -9,6 +9,7 @@ class Snake:
         self.dx = 5
         self.dy = 0
         
+        
     def draw(self):
         for element in self.elements:
             pygame.draw.circle(screen, white, element, self.radius)
