@@ -94,10 +94,5 @@ red = (255, 0, 0)
 
 while True:
     if not game():
-        break
-
-    # Game over, ask the user to play again
-    font = pygame.font.SysFont(None, 40)
-    text = font.render('Game over! Play again? (Y/N)', True, white)
-    text_rect = text.get_rect(center=(width/2, height/2))
-    screen.blit
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('Game over! Play again? (Y/N)', True, white)
